@@ -1,0 +1,10 @@
+{
+  "name": "ollin-landing",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "devDependencies": {
+    "@vercel/node": "^5.1.0",
+    "typescript": "^5.6.3"
+  }
+}
