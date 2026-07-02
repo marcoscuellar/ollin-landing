@@ -12,7 +12,9 @@ const META_PREFIX = "ollin:contact:";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const sha256hex = (s: string) => crypto.createHash("sha256").update(s).digest("hex");
 
-interface Msg { id: string; name: string; email: string; message: string; ts: number }
+interface Msg { id: string; name: string; email: string; message: string; reason: string; ts: number }
+
+const REASONS = ["human", "professional", "partner"];
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!kvConfigured()) {
@@ -41,6 +43,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const name = String(req.body?.name ?? "").trim().slice(0, 120);
     const email = String(req.body?.email ?? "").trim().toLowerCase();
     const message = String(req.body?.message ?? "").trim().slice(0, 4000);
+    let reason = String(req.body?.reason ?? "human").trim().toLowerCase().slice(0, 40);
+    if (!REASONS.includes(reason)) reason = "human";
     if (!name) return res.status(400).json({ error: "Tell me your name so I know who I'm talking to." });
     if (!EMAIL_RE.test(email) || email.length > 254) {
       return res.status(400).json({ error: "That doesn't look like a valid email." });
@@ -48,7 +52,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!message) return res.status(400).json({ error: "The message is empty — say anything, even the messy version." });
 
     const id = crypto.randomUUID();
-    const msg: Msg = { id, name, email, message, ts: Date.now() };
+    const msg: Msg = { id, name, email, message, reason, ts: Date.now() };
     await kvSAdd(SET_KEY, id);
     await kvSet(META_PREFIX + id, msg);
     return res.status(200).json({ ok: true });
