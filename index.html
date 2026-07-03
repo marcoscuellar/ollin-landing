@@ -61,7 +61,25 @@
   /* ── hero ── */
   .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:36px}
   .mark{display:inline-flex;align-items:center;gap:14px}
-  .hero{min-height:68vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:9vh 0 8vh}
+
+  /* ── fixed top nav ── */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:20px 56px;transition:background .35s ease,border-color .35s ease,padding .3s ease;border-bottom:1px solid transparent}
+  .nav.scrolled{background:rgba(255,255,255,.88);backdrop-filter:saturate(160%) blur(14px);border-bottom:1px solid var(--line);padding:13px 56px}
+  .nav-mark{font-family:var(--mono);font-size:13px;letter-spacing:.14em;font-weight:500;color:var(--on-green);
+    background:transparent;border:1px solid var(--green-line);border-radius:7px;padding:7px 10px;transition:color .35s,border-color .35s}
+  .nav.scrolled .nav-mark{color:var(--green);border-color:var(--line-3)}
+  .nav-links{display:flex;align-items:center;gap:32px}
+  .nav-links a{font-family:var(--ui);font-size:14.5px;font-weight:500;letter-spacing:-.01em;color:var(--on-green-2);transition:color .25s,opacity .35s}
+  .nav-links a:hover{color:var(--on-green)}
+  .nav.scrolled .nav-links a{color:var(--ink-3)}
+  .nav.scrolled .nav-links a:hover{color:var(--green)}
+  .nav-cta{font-family:var(--ui);font-size:14px;font-weight:600;letter-spacing:-.01em;color:#241c07;background:var(--gold);
+    padding:9px 18px;border-radius:10px;transition:transform .15s ease,background .35s,color .35s}
+  .nav-cta:hover{transform:translateY(-1px)}
+  .nav.scrolled .nav-cta{background:var(--green);color:var(--on-green)}
+  @media(max-width:760px){.nav-links{display:none}.nav,.nav.scrolled{padding:14px 24px}}
+  .hero{min-height:68vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:calc(9vh + 72px) 0 8vh}
   .rule{width:64px;height:3px;background:var(--gold);margin:0 auto 26px}
   .h1{font-family:var(--display);font-weight:900;letter-spacing:-.05em;line-height:.94;
     font-size:clamp(44px,7.5vw,84px);color:var(--on-green);max-width:15ch;margin:0 auto}
@@ -317,18 +335,25 @@
 </head>
 <body>
 
+  <!-- ============ NAV (fixed top bar) ============ -->
+  <nav class="nav" id="nav">
+    <div class="nav-mark">Ōllin</div>
+    <div class="nav-links">
+      <a href="#problem">The problem</a>
+      <a href="#how">How it works</a>
+      <a href="#does">What it does</a>
+      <a href="#science">The science</a>
+      <a href="#voices">Voices</a>
+    </div>
+    <a href="#join" class="nav-cta">Get early access</a>
+  </nav>
+
+
   
 
   <!-- 1 · GREEN — hero -->
   <div class="band green">
     <div class="wrap">
-      <div class="top">
-        <span class="mark">
-          <img class="lockup" src="data:image/png;base64,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" alt="Ollin">
-          <span class="mono">Movement</span>
-        </span>
-        <span class="mono">Coming&nbsp;soon · 2026</span>
-      </div>
       <section class="hero">
         <div class="rule"></div>
         <div class="eyebrow"><b style="color:var(--gold)">Ōllin</b> · Nahuatl for movement</div>
@@ -349,7 +374,7 @@
   </div>
 
   <!-- 2 · WHITE — yeah, same -->
-  <div class="band white">
+  <div class="band white" id="problem">
     <div class="wrap">
       <section class="same">
         <div class="eyebrow">You know the day</div>
@@ -361,7 +386,7 @@
   </div>
 
   <!-- 3 · GREEN — how it works -->
-  <div class="band green">
+  <div class="band green" id="how">
     <div class="wrap">
       <section>
         <div class="sec-head">
@@ -442,7 +467,7 @@
   </div>
 
   <!-- 4 · WHITE — ways back in -->
-  <div class="band white">
+  <div class="band white" id="does">
     <div class="wrap">
       <section>
         <div class="ways">
@@ -478,7 +503,7 @@
   </div>
 
   <!-- 5 · GREEN — our commitment -->
-  <div class="band green">
+  <div class="band green" id="science">
     <div class="wrap">
       <section>
         <div class="sec-head">
@@ -601,7 +626,7 @@
   </div>
 
   <!-- 7 · GREEN — voices -->
-  <div class="band green">
+  <div class="band green" id="voices">
     <div class="wrap">
       <section>
         <div class="sec-head">
@@ -655,7 +680,7 @@
               to talk — not as a user, just as a human — my door's open.</div>
             </div>
           </div>
-          <div class="capture2">
+          <div class="capture2" id="join">
             <div class="c2-copy"><b>Want in when it opens?</b> One email, once — the day Ollin opens. No noise, no drip campaign.</div>
             <div class="joinbar">
               <input type="email" id="email2" placeholder="you@work.com" autocomplete="email" required="" aria-label="Email address">
@@ -848,4 +873,12 @@
 
 
 
+  <script>
+    (function(){
+      var nav=document.getElementById('nav');
+      if(!nav)return;
+      var onScroll=function(){nav.classList.toggle('scrolled', window.scrollY>40);};
+      onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+    })();
+  </script>
 </body></html>
